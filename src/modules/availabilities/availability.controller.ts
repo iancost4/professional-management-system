@@ -31,7 +31,7 @@ export class AvailabilityController {
    * @returns {HttpResponseToFront}
    */
   @ApiOperation({ summary: 'Find Availability' })
-  @ApiResponse({ status: 200, type: AvailabilityFormatedDto, isArray: true })
+  @ApiResponse({ status: 200, type: HttpResponseToFront })
   @Get(':id')
   @HttpCode(200)
   async show(
@@ -70,7 +70,7 @@ export class AvailabilityController {
    * @returns {HttpResponseToFront}
    */
   @ApiOperation({ summary: 'Create Availability' })
-  @ApiResponse({ status: 201, type: AvailabilityDto })
+  @ApiResponse({ status: 201, type: HttpResponseToFront })
   @ApiBody({ type: AvailabilityCreateDto })
   @Post('/')
   @HttpCode(201)
@@ -93,7 +93,7 @@ export class AvailabilityController {
    * @returns {HttpResponseToFront}
    */
   @ApiOperation({ summary: 'Update Availability' })
-  @ApiResponse({ status: 200, type: AvailabilityDto })
+  @ApiResponse({ status: 200, type: HttpResponseToFront })
   @ApiBody({ type: AvailabilityUpdateDto })
   @Put(':id')
   @HttpCode(201)

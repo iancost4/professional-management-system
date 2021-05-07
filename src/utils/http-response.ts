@@ -63,7 +63,9 @@ export class HttpResponse {
 }
 
 export class HttpResponseToFront {
+  @ApiProperty({ example: 'Sucesso' })
   message: string;
+  @ApiProperty({ example: {} })
   data: any;
 
   constructor(httpResponseToFront: HttpResponseToFront) {
