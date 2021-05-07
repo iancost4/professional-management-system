@@ -45,19 +45,21 @@ $ yarn test
 
 ```
  PASS  src/modules/availabilities/test/availability.controller.spec.ts
- PASS  src/modules/availabilities/test/availabilityCreate.dto.spec.ts
+ PASS  src/modules/availabilities/test/availability.service.spec.ts
  PASS  src/modules/availabilities/test/availability.dto.spec.ts
+ PASS  src/modules/availabilities/test/availabilityCreate.dto.spec.ts
  
- PASS  src/modules/bookings/test/bookingCreate.dto.spec.ts
- PASS  src/modules/bookings/test/booking.controller.spec.ts
- PASS  src/modules/bookings/test/booking.dto.spec.ts
- 
+ PASS  src/modules/users/test/user.controller.spec.ts
  PASS  src/modules/users/test/user.dto.spec.ts
  PASS  src/modules/users/test/userCreate.dto.spec.ts
- PASS  src/modules/users/test/user.controller.spec.ts
+ 
+ PASS  src/modules/bookings/test/booking.controller.spec.ts
+ PASS  src/modules/bookings/test/booking.service.spec.ts
+ PASS  src/modules/bookings/test/booking.dto.spec.ts
+ PASS  src/modules/bookings/test/bookingCreate.dto.spec.ts
 
-Test Suites: 9 passed, 9 total
-Tests:       16 passed, 16 total
+Test Suites: 11 passed, 11 total
+Tests:       20 passed, 20 total
 Snapshots:   0 total
 ```
 ## Rotas
@@ -96,12 +98,15 @@ Response: `201`
 Response: `200`
 ```
 {
-    "id": 7,
-    "day": "FRIDAY",
-    "availableTime": "14:30",
-    "professionalId": 1,
-    "createdAt": "2021-05-06T03:50:37.000Z",
-    "updatedAt": "2021-05-06T03:54:30.000Z"
+    "message": "Registro encontrado com sucesso!",
+    "data": {
+        "id": 7,
+        "day": "SATURDAY",
+        "availableTime": "11:00",
+        "professionalId": 1,
+        "createdAt": "2021-05-07T00:33:45.000Z",
+        "updatedAt": "2021-05-07T00:33:45.000Z"
+    }
 }
 ```
 
@@ -210,14 +215,19 @@ Body
 Response: `200`
 ```
 {
-    "id": 7,
-    "day": "FRIDAY",
-    "availableTime": "14:30",
-    "professionalId": 1,
-    "createdAt": "2021-05-06T03:50:37.000Z",
-    "updatedAt": "2021-05-06T03:54:30.000Z"
+    "message": "Registro atualizado com sucesso!",
+    "data": {
+        "id": 26,
+        "day": "MONDAY",
+        "availableTime": "14:30",
+        "professionalId": 3,
+        "createdAt": "2021-05-07T03:20:36.000Z",
+        "updatedAt": "2021-05-07T03:21:04.000Z"
+    }
 }
 ```
+
+------------
 
 ##### [DELETE] /availabilities/:id
 Response: `200`
@@ -228,7 +238,11 @@ Response: `200`
 }
 ```
 
+------------
+------------
+
 ### Reservas
+------------
 
 ##### [POST] /bookings
 Body

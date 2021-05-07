@@ -25,8 +25,16 @@ export class HttpResponse {
     });
   };
 
+  static foundSuccessfully = (data?: any) => {
+    return new HttpResponse('Registro encontrado com sucesso!', 200, data);
+  };
+
   static successfullyCreated = (data?: any) => {
     return new HttpResponse('Registro(s) criado(s) com sucesso!', 201, data);
+  };
+
+  static updatedSuccessfully = (data?: any) => {
+    return new HttpResponse('Registro atualizado com sucesso!', 200, data);
   };
 
   static successfullyDeleted = () => {

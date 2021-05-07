@@ -1,11 +1,9 @@
-import { HttpResponse } from '@/utils/http-response';
 import Booking from '@/modules/bookings/entities/booking.entity';
 import { BookingService } from '@/modules/bookings/booking.service';
 import Availability from '@/modules/availabilities/entities/availability.entity';
 import { AvailabilityService } from '@/modules/availabilities/availability.service';
 import User from '@/modules/users/entities/user.entity';
 import { UserService } from '@/modules/users/user.service';
-import { mockBooking, mockBookingCreate } from '@/mocks/booking.mock';
 
 import { mockAvailabilityFormatedPromise } from '@/mocks/availability.mock';
 import AvailabilityFormatedDto from '@/modules/availabilities/dto/availability-formated.dto';
