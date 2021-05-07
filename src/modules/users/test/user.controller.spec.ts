@@ -2,7 +2,7 @@ import { HttpResponse } from '@/utils/http-response';
 import User from '@/modules/users/entities/user.entity';
 import { UserController } from '@/modules/users/user.controller';
 import { UserService } from '@/modules/users/user.service';
-import { mockUserCreate, mockUserPromise } from '@/mocks/user.mock';
+import { mockUser, mockUserCreate, mockUserPromise } from '@/mocks/user.mock';
 
 describe('Test User Controller', () => {
   let userController: UserController;
@@ -24,7 +24,7 @@ describe('Test User Controller', () => {
     const response = await userController.store(mockUserCreate);
 
     expect(response).toStrictEqual(
-      HttpResponse.successfullyCreated().transformToReponse(),
+      HttpResponse.successfullyCreated(mockUser).transformToReponse(),
     );
   });
 });
