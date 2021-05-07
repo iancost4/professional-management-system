@@ -25,10 +25,10 @@ export class BookingController {
   @ApiBody({ type: BookingCreateDto })
   @Post('/')
   @HttpCode(201)
-  async create(
+  async store(
     @Body() bookingCreateDto: BookingCreateDto,
   ): Promise<HttpResponseToFront> {
-    const booking = await this.bookingService.create(bookingCreateDto);
+    const booking = await this.bookingService.store(bookingCreateDto);
 
     return HttpResponse.successfullyCreated(booking).transformToReponse();
   }

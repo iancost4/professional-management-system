@@ -4,6 +4,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Op } from 'sequelize';
 
 import Booking from '@/modules/bookings/entities/booking.entity';
 import { BookingCreateDto } from '@/modules/bookings/dto/booking-create.dto';
@@ -16,6 +17,7 @@ import { HttpResponse } from '@/utils/http-response';
 
 import weekday from '@/utils/weekday';
 import formatDate from '@/utils/format-date';
+import addAndSubMinutesToSchedule from '@/utils/addAndSubMinutesToSchedule';
 
 @Injectable()
 export class BookingService {
@@ -35,7 +37,7 @@ export class BookingService {
    *
    * @returns {Booking}
    */
-  async create(bookingCreateDto: BookingCreateDto): Promise<any> {
+  async store(bookingCreateDto: BookingCreateDto): Promise<any> {
     try {
       await this.userService.show(bookingCreateDto.professionalId);
       await this.userService.show(bookingCreateDto.clientId);
@@ -74,12 +76,12 @@ export class BookingService {
    */
   async checkExistsAvailableTime(
     availableTime: string,
-    professiionalId: number,
+    professionalId: number,
     bookingDate: string,
   ): Promise<boolean> {
     try {
       const professionalAvailabilities = await this.availabilityService.showAllByProfessionalId(
-        professiionalId,
+        professionalId,
       );
 
       const date = formatDate(bookingDate);
@@ -136,9 +138,13 @@ export class BookingService {
     bookingDate: string,
   ): Promise<boolean> {
     try {
+      const timeToCheck = addAndSubMinutesToSchedule(appointmentTime, 30);
+
       const availableTimeIsFree = await this.bookingRepository.findOne({
         where: {
-          appointmentTime,
+          appointmentTime: {
+            [Op.in]: timeToCheck,
+          },
           professionalId,
           date: formatDate(bookingDate),
         },
