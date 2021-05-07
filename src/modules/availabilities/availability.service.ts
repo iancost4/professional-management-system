@@ -58,6 +58,8 @@ export class AvailabilityService {
     id: number,
   ): Promise<AvailabilityFormatedDto[]> {
     try {
+      await this.userService.show(id);
+
       const availabilities = await this.availabilityRepository.findAll({
         where: {
           professionalId: id,
@@ -185,8 +187,8 @@ export class AvailabilityService {
         { day: 'SUNDAY', availableTimes: [] },
       ];
 
-      availabilities.map(function (item) {
-        response.map(function (res) {
+      availabilities.map((item) => {
+        response.map((res) => {
           if (res.day == item.day) {
             res.availableTimes.push({
               availableTime: item.availableTime,
@@ -278,8 +280,10 @@ export class AvailabilityService {
       const diff = Math.abs(dateEnd.getTime() - dateStart.getTime());
       let diffInMinutes = Math.floor(diff / 1000 / 60);
 
+      if (diffInMinutes < 60) throw HttpResponse.invalidShortTime();
+
       const response = [];
-      while (diffInMinutes >= 0) {
+      while (diffInMinutes >= 60) {
         const hour =
           dateStart.getHours() < 10
             ? '0' + dateStart.getHours()

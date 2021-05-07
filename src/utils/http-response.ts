@@ -37,6 +37,10 @@ export class HttpResponse {
     return new HttpResponse('Dados inválidos!', 422, data);
   };
 
+  static invalidShortTime = (data?: any) => {
+    return new HttpResponse('Intervalo de horário muito curto!', 422, data);
+  };
+
   static invalidDate = () => {
     return new HttpResponse('Horário indisponivel!', 422);
   };

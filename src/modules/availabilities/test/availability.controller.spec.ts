@@ -1,10 +1,14 @@
 import { HttpResponse } from '@/utils/http-response';
+import * as faker from 'faker';
 
 import Availability from '@/modules/availabilities/entities/availability.entity';
 import { AvailabilityController } from '@/modules/availabilities/availability.controller';
 import { AvailabilityService } from '@/modules/availabilities/availability.service';
+import AvailabilityFormatedDto from '../dto/availability-formated.dto';
+
 import User from '@/modules/users/entities/user.entity';
 import { UserService } from '@/modules/users/user.service';
+
 import {
   mockAvailability,
   mockAvailabilityCreate,
@@ -12,9 +16,6 @@ import {
   mockAvailabilityPromise,
   mockAvailabilityFormated,
 } from '@/mocks/availability.mock';
-
-import * as faker from 'faker';
-import AvailabilityFormatedDto from '../dto/availability-formated.dto';
 
 describe('Test Availability Controller', () => {
   let availabilityController: AvailabilityController;
@@ -61,44 +62,50 @@ describe('Test Availability Controller', () => {
   });
 
   it('Find Availability.', async () => {
-    const findAvailability = await availabilityController.show(1);
+    const availabilityId = faker.datatype.number();
+    const availability = await availabilityController.show(availabilityId);
 
-    expect(mockAvailability).toBe(findAvailability);
+    expect(availability).toStrictEqual(
+      HttpResponse.foundSuccessfully(mockAvailability).transformToReponse(),
+    );
   });
 
   it('Find Professional Availabilities', async () => {
-    const findProfAvailabilities = await availabilityController.showByProfessionalId(1);
+    const availabilityId = faker.datatype.number();
+    const availabilities = await availabilityController.showByProfessionalId(
+      availabilityId,
+    );
 
-    expect(mockAvailabilityFormated).toBe(findProfAvailabilities);
+    expect(mockAvailabilityFormated).toBe(availabilities);
   });
 
   it('Store Professional Availabilities', async () => {
-    const findProfAvailabilities = await availabilityController.store(
+    const availability = await availabilityController.store(
       mockAvailabilityCreate,
     );
 
-    expect(findProfAvailabilities).toStrictEqual(
+    expect(availability).toStrictEqual(
       HttpResponse.successfullyCreated().transformToReponse(),
     );
   });
 
   it('Update Availability', async () => {
     const availabilityId = faker.datatype.number();
-    const findProfAvailabilities = await availabilityController.update(
+    const availability = await availabilityController.update(
       availabilityId,
       mockAvailabilityUpdate,
     );
 
-    expect(mockAvailability).toBe(findProfAvailabilities);
+    expect(availability).toStrictEqual(
+      HttpResponse.updatedSuccessfully(mockAvailability).transformToReponse(),
+    );
   });
 
   it('Delete Availability', async () => {
     const availabilityId = faker.datatype.number();
-    const findProfAvailabilities = await availabilityController.destroy(
-      availabilityId,
-    );
+    const availability = await availabilityController.destroy(availabilityId);
 
-    expect(findProfAvailabilities).toStrictEqual(
+    expect(availability).toStrictEqual(
       HttpResponse.successfullyDeleted().transformToReponse(),
     );
   });

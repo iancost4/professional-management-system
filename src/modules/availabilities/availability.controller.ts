@@ -34,16 +34,20 @@ export class AvailabilityController {
   @ApiResponse({ status: 200, type: AvailabilityFormatedDto, isArray: true })
   @Get(':id')
   @HttpCode(200)
-  async show(@Param('id', ParseIntPipe) id: number): Promise<AvailabilityDto> {
-    return this.availabilityService.show(id);
+  async show(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<HttpResponseToFront> {
+    const availability = await this.availabilityService.show(id);
+
+    return HttpResponse.foundSuccessfully(availability).transformToReponse();
   }
 
   /**
    * Find Professional Availabilities
    *
-   * @param {string} id - Id to find professional availabilities
+   * @param {string} id - Professional Id to find professional availabilities
    *
-   * @returns {HttpResponseToFront}
+   * @returns {AvailabilityFormatedDto[]}
    */
   @ApiOperation({ summary: 'Find Professional Availability' })
   @ApiResponse({ status: 200, type: AvailabilityFormatedDto, isArray: true })
@@ -96,8 +100,13 @@ export class AvailabilityController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() availabilityUpdateDto: AvailabilityUpdateDto,
-  ): Promise<AvailabilityDto> {
-    return this.availabilityService.update(id, availabilityUpdateDto);
+  ): Promise<HttpResponseToFront> {
+    const availability = await this.availabilityService.update(
+      id,
+      availabilityUpdateDto,
+    );
+
+    return HttpResponse.updatedSuccessfully(availability).transformToReponse();
   }
 
   /**

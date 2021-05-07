@@ -31,31 +31,66 @@ export const mockAvailabilityPromise: Promise<AvailabilityDto> = Promise.resolve
 export const mockAvailabilityFormated: AvailabilityFormatedDto[] = [
   {
     day: 'MONDAY',
-    availableTimes: ['08:30', '09:00', '10:00'],
+    availableTimes: [
+      { availableTime: '08:00', id: 1 },
+      { availableTime: '08:30', id: 2 },
+      { availableTime: '09:00', id: 3 },
+      { availableTime: '09:30', id: 4 },
+    ],
   },
   {
     day: 'TUESDAY',
-    availableTimes: ['08:30', '09:00', '10:00'],
+    availableTimes: [
+      { availableTime: '08:00', id: 1 },
+      { availableTime: '08:30', id: 2 },
+      { availableTime: '09:00', id: 3 },
+      { availableTime: '09:30', id: 4 },
+    ],
   },
   {
     day: 'WEDNESDAY',
-    availableTimes: ['08:30', '09:00', '10:00'],
+    availableTimes: [
+      { availableTime: '08:00', id: 1 },
+      { availableTime: '08:30', id: 2 },
+      { availableTime: '09:00', id: 3 },
+      { availableTime: '09:30', id: 4 },
+    ],
   },
   {
     day: 'THURSDAY',
-    availableTimes: ['08:30', '09:00', '10:00'],
+    availableTimes: [
+      { availableTime: '08:00', id: 1 },
+      { availableTime: '08:30', id: 2 },
+      { availableTime: '09:00', id: 3 },
+      { availableTime: '09:30', id: 4 },
+    ],
   },
   {
     day: 'FRIDAY',
-    availableTimes: ['08:30', '09:00', '10:00'],
+    availableTimes: [
+      { availableTime: '08:00', id: 1 },
+      { availableTime: '08:30', id: 2 },
+      { availableTime: '09:00', id: 3 },
+      { availableTime: '09:30', id: 4 },
+    ],
   },
   {
     day: 'SATURDAY',
-    availableTimes: ['08:30', '09:00', '10:00'],
+    availableTimes: [
+      { availableTime: '08:00', id: 1 },
+      { availableTime: '08:30', id: 2 },
+      { availableTime: '09:00', id: 3 },
+      { availableTime: '09:30', id: 4 },
+    ],
   },
   {
     day: 'SUNDAY',
-    availableTimes: ['08:30', '09:00', '10:00'],
+    availableTimes: [
+      { availableTime: '08:00', id: 1 },
+      { availableTime: '08:30', id: 2 },
+      { availableTime: '09:00', id: 3 },
+      { availableTime: '09:30', id: 4 },
+    ],
   },
 ];
 
