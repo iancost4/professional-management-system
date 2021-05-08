@@ -5,6 +5,17 @@
  - Cadastrar, editar, visualizar e deletar disponibilidades dos profissionais
  - Cadastrar sessão de um cliente (um cliente reservar o horário de um profissional)
 
+
+## Regras do negócio
+- Permitir que os profissionais gerenciem sua disponibilidade, sendo necessário um sistema que gerencie os intervalos de tempo
+- Os profissionais precisam definir em quais dias da semana estarão disponíveis e o intervalo de tempo para cada dia
+- Cada slot tem duração de 1 hora e contém dois períodos de disponibilidade de 30 minutos, Exemplo: um profissional que estará disponível às segundas-feiras das 8h às 11h terá todos esses slots:
+
+8:00am 8:30am 9:00am 9:30am 10:00am
+
+- Quando um cliente reserva uma sessão, é necessário bloquear os slots para não haver conflitos com outros clientes que tentam reservar sessões ao mesmo tempo. Olhando para o exemplo acima, se um cliente agendar uma sessão começando às 8h30, o profissional não estará disponível às 8h30 e às 9h, pois cada sessão tem uma duração de 1 hora.
+
+
 ## Tecnologias
  - TypeScript 
  - NodeJs
