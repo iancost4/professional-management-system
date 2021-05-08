@@ -2,6 +2,8 @@ import {
   Injectable,
   Inject,
   InternalServerErrorException,
+  NotFoundException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 
@@ -13,7 +15,7 @@ import AvailabilityFormatedDto from '@/modules/availabilities/dto/availability-f
 
 import { UserService } from '@/modules/users/user.service';
 
-import { HttpResponse } from '@/utils/http-response';
+import { exceptionsMessages } from '@/utils/exceptions';
 
 @Injectable()
 export class AvailabilityService {
@@ -33,17 +35,21 @@ export class AvailabilityService {
    */
   async show(id: number): Promise<Availability> {
     try {
-      const availability = await this.availabilityRepository.findOne({
-        where: {
-          id,
-        },
-      });
+      const availability = await this.availabilityRepository.findByPk(id);
 
-      if (!availability) throw HttpResponse.notFound();
+      if (!availability) {
+        throw new NotFoundException(
+          exceptionsMessages.availability.notFoundError,
+        );
+      }
 
       return availability;
     } catch (e) {
-      throw new InternalServerErrorException(e.message);
+      if (e instanceof NotFoundException) {
+        throw e;
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -106,7 +112,14 @@ export class AvailabilityService {
 
       return true;
     } catch (e) {
-      throw new InternalServerErrorException(e.message);
+      if (
+        e instanceof NotFoundException ||
+        e instanceof UnprocessableEntityException
+      ) {
+        throw e;
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -128,7 +141,11 @@ export class AvailabilityService {
         },
       });
 
-      if (!availability) throw HttpResponse.notFound();
+      if (!availability) {
+        throw new NotFoundException(
+          exceptionsMessages.availability.notFoundError,
+        );
+      }
 
       availability.day = availabilityUpdateDto.day;
       availability.availableTime = availabilityUpdateDto.availableTime;
@@ -137,7 +154,11 @@ export class AvailabilityService {
 
       return availability;
     } catch (e) {
-      throw new InternalServerErrorException(e.message);
+      if (e instanceof NotFoundException) {
+        throw e;
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -156,13 +177,21 @@ export class AvailabilityService {
         },
       });
 
-      if (!availability) throw HttpResponse.notFound();
+      if (!availability) {
+        throw new NotFoundException(
+          exceptionsMessages.availability.notFoundError,
+        );
+      }
 
       await availability.destroy();
 
       return true;
     } catch (e) {
-      throw new InternalServerErrorException(e.message);
+      if (e instanceof NotFoundException) {
+        throw e;
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -234,11 +263,19 @@ export class AvailabilityService {
         }
       }
 
-      if (!validResponse) throw HttpResponse.invalidData();
+      if (!validResponse) {
+        throw new UnprocessableEntityException(
+          exceptionsMessages.availability.unprocessableTimeEntityError,
+        );
+      }
 
       return validResponse;
     } catch (e) {
-      throw new InternalServerErrorException(e.message);
+      if (e instanceof UnprocessableEntityException) {
+        throw e;
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -280,7 +317,11 @@ export class AvailabilityService {
       const diff = Math.abs(dateEnd.getTime() - dateStart.getTime());
       let diffInMinutes = Math.floor(diff / 1000 / 60);
 
-      if (diffInMinutes < 60) throw HttpResponse.invalidShortTime();
+      if (diffInMinutes < 60) {
+        throw new UnprocessableEntityException(
+          exceptionsMessages.availability.unprocessableShortTimeEntityError,
+        );
+      }
 
       const response = [];
       while (diffInMinutes >= 60) {
@@ -299,7 +340,14 @@ export class AvailabilityService {
 
       return response;
     } catch (e) {
-      throw new InternalServerErrorException(e.message);
+      if (
+        e instanceof NotFoundException ||
+        e instanceof UnprocessableEntityException
+      ) {
+        throw e;
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 

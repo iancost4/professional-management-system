@@ -1,10 +1,13 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 
 import User from '@/modules/users/entities/user.entity';
 import { UserCreateDto } from '@/modules/users/dto/user-create.dto';
-
-import { HttpResponse } from '@/utils/http-response';
+import { exceptionsMessages } from '@/utils/exceptions';
 
 @Injectable()
 export class UserService {
@@ -28,11 +31,17 @@ export class UserService {
         },
       });
 
-      if (!user) throw HttpResponse.notFound();
+      if (!user) {
+        throw new NotFoundException(exceptionsMessages.user.notFoundError);
+      }
 
       return user;
     } catch (e) {
-      throw new InternalServerErrorException(e);
+      if (e instanceof NotFoundException) {
+        throw e;
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 

@@ -18,6 +18,7 @@ services:
     container_name: zenklub_app
     build: .
     image: zenklub/app
+    restart: on-failure
     volumes:
       - .:/app
     ports:

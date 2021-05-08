@@ -2,6 +2,7 @@ import {
   Injectable,
   Inject,
   InternalServerErrorException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
@@ -13,11 +14,10 @@ import { AvailabilityService } from '@/modules/availabilities/availability.servi
 
 import { UserService } from '@/modules/users/user.service';
 
-import { HttpResponse } from '@/utils/http-response';
-
 import weekday from '@/utils/weekday';
 import formatDate from '@/utils/format-date';
 import addAndSubMinutesToSchedule from '@/utils/addAndSubMinutesToSchedule';
+import { exceptionsMessages } from '@/utils/exceptions';
 
 @Injectable()
 export class BookingService {
@@ -37,7 +37,7 @@ export class BookingService {
    *
    * @returns {Booking}
    */
-  async store(bookingCreateDto: BookingCreateDto): Promise<any> {
+  async store(bookingCreateDto: BookingCreateDto): Promise<Booking> {
     try {
       await this.userService.show(bookingCreateDto.professionalId);
       await this.userService.show(bookingCreateDto.clientId);
@@ -96,11 +96,19 @@ export class BookingService {
         (item) => item.availableTime == availableTime,
       );
 
-      if (!existsSchedule) throw HttpResponse.invalidDate();
+      if (!existsSchedule) {
+        throw new UnprocessableEntityException(
+          exceptionsMessages.bookings.unprocessableProfessionalTimeAvailableEntityError,
+        );
+      }
 
       return true;
     } catch (e) {
-      throw new InternalServerErrorException(e.message);
+      if (e instanceof UnprocessableEntityException) {
+        throw e;
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -117,11 +125,19 @@ export class BookingService {
       const myRe = new RegExp('^(0[0-9]|1[0-9]|2[0-3]):(00|30)$');
       const validSchedule = myRe.exec(schedule);
 
-      if (!validSchedule) throw HttpResponse.invalidData();
+      if (!validSchedule) {
+        throw new UnprocessableEntityException(
+          exceptionsMessages.bookings.unprocessableTimeEntityError,
+        );
+      }
 
       return true;
     } catch (e) {
-      throw new InternalServerErrorException(e.message);
+      if (e instanceof UnprocessableEntityException) {
+        throw e;
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -150,11 +166,19 @@ export class BookingService {
         },
       });
 
-      if (availableTimeIsFree) throw HttpResponse.invalidDate();
+      if (availableTimeIsFree) {
+        throw new UnprocessableEntityException(
+          exceptionsMessages.bookings.unprocessableTimeAvailableEntityError,
+        );
+      }
 
       return true;
     } catch (e) {
-      throw new InternalServerErrorException(e.message);
+      if (e instanceof UnprocessableEntityException) {
+        throw e;
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 }

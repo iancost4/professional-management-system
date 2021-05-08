@@ -4,6 +4,7 @@ import AvailabilityDto from '@/modules/availabilities/dto/availability.dto';
 import { AvailabilityCreateDto } from '@/modules/availabilities/dto/availability-create.dto';
 import AvailabilityFormatedDto from '@/modules/availabilities/dto/availability-formated.dto';
 import { AvailabilityUpdateDto } from '@/modules/availabilities/dto/availability-update.dto';
+import { Days } from '@/utils/days.enum';
 
 export const mockAvailability: AvailabilityDto = {
   id: faker.datatype.number(),
@@ -13,7 +14,7 @@ export const mockAvailability: AvailabilityDto = {
 };
 
 export const mockAvailabilityCreate: AvailabilityCreateDto = {
-  day: faker.random.word(),
+  day: Days.MONDAY,
   availableTimeStart: faker.random.word(),
   availableTimeEnd: faker.random.word(),
   professionalId: faker.datatype.number(),

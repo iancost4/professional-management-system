@@ -15,7 +15,6 @@ import { HttpResponse, HttpResponseToFront } from '@/utils/http-response';
 import { AvailabilityService } from '@/modules/availabilities/availability.service';
 import { AvailabilityCreateDto } from '@/modules/availabilities/dto/availability-create.dto';
 import { AvailabilityUpdateDto } from '@/modules/availabilities/dto/availability-update.dto';
-import AvailabilityDto from '@/modules/availabilities/dto/availability.dto';
 import AvailabilityFormatedDto from '@/modules/availabilities/dto/availability-formated.dto';
 
 @ApiTags('Availability')

@@ -1,10 +1,11 @@
 import { IsNumber, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Days } from '@/utils/days.enum';
 
 export class AvailabilityCreateDto {
   @IsNotEmpty({ message: 'day:Campo obrigatório.' })
   @ApiProperty({ example: 'MONDAY' })
-  day: string;
+  day: Days;
 
   @IsNumber()
   @IsNotEmpty({ message: 'professionalId:Campo obrigatório.' })
