@@ -1,10 +1,10 @@
 import * as faker from 'faker';
 
-import AvailabilityDto from '@/modules/availabilities/dto/availability.dto';
-import { AvailabilityCreateDto } from '@/modules/availabilities/dto/availability-create.dto';
-import AvailabilityFormatedDto from '@/modules/availabilities/dto/availability-formated.dto';
-import { AvailabilityUpdateDto } from '@/modules/availabilities/dto/availability-update.dto';
 import { Days } from '@/utils/days.enum';
+import AvailabilityDto from '@/modules/v1/availabilities/dto/availability.dto';
+import AvailabilityFormatedDto from '@/modules/v1/availabilities/dto/availabilityFormated.dto';
+import { AvailabilityCreateDto } from '@/modules/v1/availabilities/dto/availabilityCreate.dto';
+import { AvailabilityUpdateDto } from '@/modules/v1/availabilities/dto/availabilityUpdate.dto';
 
 export const mockAvailability: AvailabilityDto = {
   id: faker.datatype.number(),
@@ -25,9 +25,8 @@ export const mockAvailabilityUpdate: AvailabilityUpdateDto = {
   availableTime: faker.random.word(),
 };
 
-export const mockAvailabilityPromise: Promise<AvailabilityDto> = Promise.resolve(
-  mockAvailability,
-);
+export const mockAvailabilityPromise: Promise<AvailabilityDto> =
+  Promise.resolve(mockAvailability);
 
 export const mockAvailabilityFormated: AvailabilityFormatedDto[] = [
   {

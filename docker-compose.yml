@@ -6,6 +6,7 @@ services:
       dockerfile: ./.docker/mysql.dockerfile
       context: .
     image: zenklub/db
+    platform: linux/amd64
     container_name: mysql_zenklub
     volumes:
       - ./.docker/data:/app

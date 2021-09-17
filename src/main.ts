@@ -6,7 +6,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-
+import { modules as modulesV1 } from '@/modules/v1/modules';
 import { AppModule } from './app.module';
 import { CustomValidationPipe } from './pipes/custom-validation.pipe';
 
@@ -24,8 +24,10 @@ async function bootstrap(): Promise<void> {
       .setDescription('The zenklub API description')
       .setVersion('1.0')
       .build();
-    const document = SwaggerModule.createDocument(app, options);
-    SwaggerModule.setup('docs', app, document);
+    const documentV1 = SwaggerModule.createDocument(app, options, {
+      include: modulesV1,
+    });
+    SwaggerModule.setup('v1/docs', app, documentV1);
   }
 
   app.enableCors();

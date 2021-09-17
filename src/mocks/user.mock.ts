@@ -1,7 +1,7 @@
 import * as faker from 'faker';
 
-import UserDto from '@/modules/users/dto/user.dto';
-import { UserCreateDto } from '@/modules/users/dto/user-create.dto';
+import UserDto from '@/modules/v1/users/dto/user.dto';
+import { UserCreateDto } from '@/modules/v1/users/dto/userCreate.dto';
 
 export const mockUser: UserDto = {
   id: faker.datatype.number(),

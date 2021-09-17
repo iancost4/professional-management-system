@@ -1,16 +1,13 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
+import { AppService } from '@/app.service';
+import { AppController } from '@/app.controller';
 import { MysqlDatabaseProviderModule } from './providers/database/mysql/provider.module';
-import { AvailabilityModule } from '@/modules/availabilities/availability.module';
-import { BookingModule } from '@/modules/bookings/booking.module';
-import { UserModule } from '@/modules/users/user.module';
 
-const modules = [AvailabilityModule, BookingModule, UserModule];
+import { modules as modulesV1 } from '@/modules/v1/modules';
+
 @Module({
-  imports: [MysqlDatabaseProviderModule, ...modules],
+  imports: [MysqlDatabaseProviderModule, ...modulesV1],
   controllers: [AppController],
   providers: [AppService],
 })

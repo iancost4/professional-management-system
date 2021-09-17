@@ -1,7 +1,7 @@
 import * as faker from 'faker';
 
-import BookingDto from '@/modules/bookings/dto/booking.dto';
-import { BookingCreateDto } from '@/modules/bookings/dto/booking-create.dto';
+import BookingDto from '@/modules/v1/bookings/dto/booking.dto';
+import { BookingCreateDto } from '@/modules/v1/bookings/dto/bookingCreate.dto';
 
 export const mockBooking: BookingDto = {
   id: faker.datatype.number(),
@@ -18,6 +18,5 @@ export const mockBookingCreate: BookingCreateDto = {
   professionalId: faker.datatype.number(),
 };
 
-export const mockBookingPromise: Promise<BookingDto> = Promise.resolve(
-  mockBooking,
-);
+export const mockBookingPromise: Promise<BookingDto> =
+  Promise.resolve(mockBooking);
