@@ -14,9 +14,8 @@ export class CustomExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<FastifyReply>();
     const exceptionResponse =
       exception instanceof HttpException ? exception.getResponse() : exception;
-    const result = CustomExceptionFilter.handleResponseMessage(
-      exceptionResponse,
-    );
+    const result =
+      CustomExceptionFilter.handleResponseMessage(exceptionResponse);
 
     return response
       .status(+result.status)
